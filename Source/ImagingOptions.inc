@@ -26,18 +26,18 @@
   Example: If you want to disable JPEG support just uncomment //{$DEFINE DONT_LINK_JPEG} line
 *)
 
-{.$DEFINE DONT_LINK_JPEG}        // link support for Jpeg images
+{$DEFINE DONT_LINK_JPEG}        // link support for Jpeg images
 {.$DEFINE DONT_LINK_PNG}         // link support for PNG images
 {.$DEFINE DONT_LINK_TARGA}       // link support for Targa images
 {.$DEFINE DONT_LINK_BITMAP}      // link support for Windows Bitmap images
 {.$DEFINE DONT_LINK_DDS}         // link support for DDS images
-{.$DEFINE DONT_LINK_GIF}         // link support for GIF images
-{.$DEFINE DONT_LINK_MNG}         // link support for MNG images
-{.$DEFINE DONT_LINK_JNG}         // link support for JNG images
-{.$DEFINE DONT_LINK_PNM}         // link support for PortableMap images (PBM, PGM, PPM, PAM, PFM)
-{.$DEFINE DONT_LINK_RADHDR}      // link support for Radiance HDR/RGBE file format
+{$DEFINE DONT_LINK_GIF}         // link support for GIF images
+{$DEFINE DONT_LINK_MNG}         // link support for MNG images
+{$DEFINE DONT_LINK_JNG}         // link support for JNG images
+{$DEFINE DONT_LINK_PNM}         // link support for PortableMap images (PBM, PGM, PPM, PAM, PFM)
+{$DEFINE DONT_LINK_RADHDR}      // link support for Radiance HDR/RGBE file format
 
-{.$DEFINE DONT_LINK_EXTRAS}  // link support for file formats defined in
+{$DEFINE DONT_LINK_EXTRAS}  // link support for file formats defined in
                              // Extensions package. Exactly which formats will be
                              // registered depends on settings in
                              // ImagingExtFileFormats.pas unit.

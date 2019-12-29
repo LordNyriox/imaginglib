@@ -105,8 +105,6 @@ const
   { Texture array size stored in DDS file (DX10 extension).}
   SMetaDdsArraySize = 'DdsArraySize';
 
-implementation
-
 const
   SDDSFormatName = 'DirectDraw Surface';
   SDDSMasks      = '*.dds';
@@ -356,6 +354,8 @@ type
     ArraySize: UInt32;
     Reserved: UInt32;
   end;
+
+implementation
 
 { TDDSFileFormat class implementation }
 
