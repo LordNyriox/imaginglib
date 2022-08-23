@@ -1,5 +1,4 @@
-_internal/
-_0.30/
+__internal/
 Doc/_Dox/
 Doc/_HTMLHelp/
 Doc/html/
@@ -14,11 +13,8 @@ Demos/Bin/
 Tests/*
 Dcu/*
 
-__history
+**/__history/**
 **/backup/**
-
-*.dproj
-*.groupproj
 
 *.dcu
 *.ppu
@@ -38,7 +34,6 @@ __history
 *.rsm
 *.suo
 *.vcxproj.user
-*.XE2.res
 *.compiled
 *.stat
 *.tvsconfig
@@ -62,7 +57,10 @@ Packages/*.cfg
 Source/**/*.hpp
 Extensions/**/*.hpp
 
+Demos/**/ImgBrowser.ico
+Demos/**/lclimager.ico
 
-
+!Demos/**/ImgBrowser.res
+!Demos/**/lclimager.res
 
 

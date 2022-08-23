@@ -2,23 +2,23 @@ program ImgBrowser;
 
 uses
   Forms,
-{$IFDEF LCL}
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
+  {$IFDEF LCL}
   Interfaces,
-{$ENDIF}
-  Main;
+  {$ENDIF}
+  Main in 'Main.pas',
+  Imaging in '..\..\..\Source\Imaging.pas',
+  ImagingCanvases in '..\..\..\Source\ImagingCanvases.pas',
+  ImagingClasses in '..\..\..\Source\ImagingClasses.pas';
 
 {$R *.res}
 
 begin
 {$IFDEF LCL}
   RequireDerivedFormResource := True;
-  Application.Scaled := True;
+  Application.Scaled:=True;
 {$ENDIF}
+  Application.Title:='Image Browser';
   Application.Initialize;
-  Application.Title := 'ImgBrowser';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.

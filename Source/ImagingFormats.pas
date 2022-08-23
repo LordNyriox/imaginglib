@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit manages information about all image data formats and contains
   low level format conversion, manipulation, and other related functions.}
@@ -329,7 +313,7 @@ const
   // Grayscale conversion channel weights
   GrayConv: TColorFPRec = (B: 0.114; G: 0.587; R: 0.299; A: 0.0);
 
-  // Contants for converting integer colors to floating point
+  // Constants for converting integer colors to floating point
   OneDiv8Bit: Single = 1.0 / 255.0;
   OneDiv16Bit: Single = 1.0 / 65535.0;
 
@@ -873,7 +857,7 @@ var
     ChannelCount: 3;
     HasAlphaChannel: False;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifR8G8B8);
@@ -884,7 +868,7 @@ var
     ChannelCount: 3;
     HasAlphaChannel: False;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifR8G8B8);
@@ -895,7 +879,7 @@ var
     ChannelCount: 4;
     HasAlphaChannel: True;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifA8R8G8B8);
@@ -906,7 +890,7 @@ var
     ChannelCount: 4;
     HasAlphaChannel: True;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifA8R8G8B8);
@@ -917,7 +901,7 @@ var
     ChannelCount: 4;
     HasAlphaChannel: True;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifA8R8G8B8);
@@ -928,7 +912,7 @@ var
     ChannelCount: 4;
     HasAlphaChannel: True;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifA8R8G8B8);
@@ -939,7 +923,7 @@ var
     ChannelCount: 4;
     HasAlphaChannel: True;
     IsSpecial: True;
-    IsPasstrough: True;
+    IsPassthrough: True;
     GetPixelsSize: GetBCPixelsSize;
     CheckDimensions: CheckBCDimensions;
     SpecialNearestFormat: ifA8R8G8B8);}
@@ -1205,7 +1189,7 @@ procedure ReduceColorsMedianCut(NumPixels: LongInt; Src, Dst: PByte; SrcInfo,
     Inc(Box.Total, C.Number);
   end;
 
-  procedure MakeColormap;
+  procedure MakeColorMap;
   var
     I, J: LongInt;
     CP, Pom: PColorBin;
@@ -1850,7 +1834,7 @@ begin
       end;
 
       DstLine := @PByteArray(DstImage.Bits)[((J + DstY) * DstImage.Width + DstX) * Info.BytesPerPixel];
-      // Now compute final colors for targte pixels in the current row
+      // Now compute final colors for target pixels in the current row
       // by sampling horizontally
       for I := 0 to DstWidth - 1 do
       begin
@@ -3381,7 +3365,7 @@ begin
       end;
 
       // we distribute the dxt block colors across the 4x4 block of the
-      // destination image accroding to the dxt block mask
+      // destination image according to the dxt block mask
       K := 0;
       for J := 0 to 3 do
         for I := 0 to 3 do
@@ -3423,7 +3407,7 @@ begin
 
       // we distribute the dxt block colors and alphas
       // across the 4x4 block of the destination image
-      // accroding to the dxt block mask and alpha block
+      // according to the dxt block mask and alpha block
       K := 0;
       for J := 0 to 3 do
       begin
@@ -3922,21 +3906,21 @@ var
   Src: PByte absolute SrcBits;
   Bitmap: PByteArray absolute DestBits;
   X, Y, WidthBytes: Integer;
-  PixelTresholded, Treshold: Byte;
+  PixelThresholded, Threshold: Byte;
 begin
-  Treshold := ClampToByte(GetOption(ImagingBinaryTreshold));
+  Threshold := ClampToByte(GetOption(ImagingBinaryThreshold));
   WidthBytes := (Width + 7) div 8;
 
   for Y := 0 to Height - 1 do
     for X := 0 to Width - 1 do
     begin
-      if Src^ > Treshold then
-        PixelTresholded := 255
+      if Src^ > Threshold then
+        PixelThresholded := 255
       else
-        PixelTresholded := 0;
+        PixelThresholded := 0;
 
       Bitmap[Y * WidthBytes + X div 8] := Bitmap[Y * WidthBytes + X div 8] or // OR current value of byte with following:
-        (PixelTresholded and 1)  // To make 1 from 255, 0 remains 0
+        (PixelThresholded and 1)  // To make 1 from 255, 0 remains 0
         shl (7 - (X mod 8));  // Put current bit to proper place in byte
 
       Inc(Src);
@@ -4372,11 +4356,11 @@ initialization
     - Added PaletteIsGrayScale and Color32ToGray functions.
 
   -- 0.77 Changes/Bug Fixes -------------------------------------
-    - NOT YET: Added support for Passtrough image data formats.
+    - NOT YET: Added support for Passthrough image data formats.
     - Added ConvertToPixel32 helper function.
 
   -- 0.26.5 Changes/Bug Fixes -----------------------------------
-    - Removed optimized codepatch for few data formats from StretchResample
+    - Removed optimized codepath for few data formats from StretchResample
       function. It was quite buggy and not so much faster anyway.
     - Added PaletteHasAlpha function.
     - Added support functions for ifBinary data format.
@@ -4415,7 +4399,7 @@ initialization
     - added pixel set/get functions optimized for various image formats
       (to be stored in TImageFormatInfo)
     - bug in ConvertSpecial caused problems when converting DXTC images
-      to bitmaps in ImagingCoponents
+      to bitmaps in ImagingComponents
     - bug in StretchRect caused that it didn't work with ifR32F and
       ifR16F formats
     - removed leftover code in FillMipMapLevel which disabled
@@ -4434,7 +4418,7 @@ initialization
     - added resolution validity check to GetDXTPixelsSize
 
   -- 0.15 Changes/Bug Fixes -----------------------------------
-    - added RBSwapFormat values to some TImageFromatInfo definitions
+    - added RBSwapFormat values to some TImageFormatInfo definitions
     - fixed bug in ConvertSpecial (causing DXT images to convert only to 32bit)
     - added CopyPixel, ComparePixels helper functions
 

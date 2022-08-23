@@ -1,7 +1,7 @@
 object AboutForm: TAboutForm
-  Left = 358
+  Left = 679
   Height = 320
-  Top = 254
+  Top = 537
   Width = 286
   ActiveControl = BitBtn1
   BorderIcons = []
@@ -12,12 +12,13 @@ object AboutForm: TAboutForm
   Color = clWindow
   OnShow = FormShow
   Position = poMainFormCenter
-  LCLVersion = '1.0.12.0'
+  LCLVersion = '2.2.0.4'
   object Image: TImage
     Left = 48
     Height = 89
     Top = 16
     Width = 188
+    Center = True
   end
   object Image2: TImage
     Left = 56
@@ -266,9 +267,7 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     AutoSize = False
     Caption = 'Vampyre Imaging Library'
-    Font.Color = clBlack
     Font.Style = [fsBold]
-    ParentColor = False
     ParentFont = False
   end
   object Label1: TLabel
@@ -278,24 +277,21 @@ object AboutForm: TAboutForm
     Width = 136
     AutoSize = False
     Caption = 'Lazarus Imager Demo'
-    Font.Color = clBlack
     Font.Style = [fsBold]
-    ParentColor = False
     ParentFont = False
     WordWrap = True
   end
   object ImLabel1: TLabel
-    Left = 8
+    Left = 14
     Height = 18
     Top = 176
     Width = 272
     Alignment = taCenter
     AutoSize = False
-    Caption = 'http://imaginglib.sourceforge.net'
-    Font.Color = clBlue
-    Font.Height = 13
+    Caption = 'https://imaginglib.sourceforge.io'
+    Font.Color = 16744448
+    Font.Height = 16
     Layout = tlCenter
-    ParentColor = False
     ParentFont = False
     OptimalFill = True
   end
@@ -307,7 +303,6 @@ object AboutForm: TAboutForm
     BorderSpacing.InnerBorder = 2
     Caption = '&Close'
     Kind = bkClose
-    NumGlyphs = 0
     TabOrder = 0
   end
   object LabVersion: TLabel
@@ -318,8 +313,6 @@ object AboutForm: TAboutForm
     Alignment = taCenter
     AutoSize = False
     Caption = 'version'
-    Font.Color = clBlack
-    ParentColor = False
     ParentFont = False
   end
 end

@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains functions for loading and saving OpenGL textures
   using Imaging and for converting images to textures and vice versa.}
@@ -144,7 +128,7 @@ function SaveGLTextureToStream(const Ext: string; Stream: TStream; const Texture
   Saves all present mipmap levels.}
 function SaveGLTextureToMemory(const Ext: string; Data: Pointer; var Size: LongInt; const Texture: GLuint): Boolean;
 
-{ Converts main level of the GL texture to TImageData strucrue. OverrideFormat
+{ Converts main level of the GL texture to TImageData structure. OverrideFormat
   can be used to convert output image to the specified format rather
   than use the format taken from GL texture, ifUnknown means no conversion.}
 function CreateImageFromGLTexture(const Texture: GLuint;
@@ -168,23 +152,23 @@ var
     pow2 texture is created and nonpow2 input image is pasted into it
     keeping its original size. This could be useful for some 2D stuff
     (and its faster than rescaling of course). Note that this is applied
-    to all rescaling smaller->bigger operations that might ocurr during
+    to all rescaling smaller->bigger operations that might occur during
     image->texture process (usually only pow2/nonpow2 stuff and when you
     set custom Width & Height in CreateGLTextureFrom(Multi)Image).}
   PasteNonPow2ImagesIntoPow2: Boolean = False;
-  { Standard behaviur if GL_ARB_texture_non_power_of_two extension is not supported
+  { Standard behavior if GL_ARB_texture_non_power_of_two extension is not supported
     is to rescale image to power of 2 dimensions. NPOT extension is exposed only
     when HW has full support for NPOT textures but some cards
     (pre-DX10 ATI Radeons, some other maybe) have partial NPOT support. 
     Namely Radeons can use NPOT textures but not mipmapped. If you know what you are doing
     you can disable NPOT support check so the image won't be rescaled to POT
-    by seting DisableNPOTSupportCheck to True.}
+    by setting DisableNPOTSupportCheck to True.}
   DisableNPOTSupportCheck: Boolean = False;
 
 implementation
 
 const
-  // Cube map consts
+  // Cube map constants
   GL_TEXTURE_BINDING_CUBE_MAP       = $8514;
   GL_TEXTURE_CUBE_MAP_POSITIVE_X    = $8515;
   GL_TEXTURE_CUBE_MAP_NEGATIVE_X    = $8516;
@@ -361,7 +345,7 @@ end;
 
 function GetGLTextureCaps(var Caps: TGLTextureCaps): Boolean;
 begin
-  // Check DXTC support and load extension functions if necesary
+  // Check DXTC support and load extension functions if necessary
   Caps.DXTCompression := IsGLExtensionSupported('GL_ARB_texture_compression') and
     IsGLExtensionSupported('GL_EXT_texture_compression_s3tc');
   if Caps.DXTCompression then

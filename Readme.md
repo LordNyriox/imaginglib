@@ -8,7 +8,8 @@ Object Pascal image loading, saving, and manipulation library.
 <https://github.com/galfar/imaginglib>  
 
 Homepage: <https://imaginglib.sourceforge.io>  
-Forum: <https://galfar.vevb.net/imaging/smf>
+Issues: <https://github.com/galfar/imaginglib/issues>  
+Discuss: <https://github.com/galfar/imaginglib/discussions>  
 
 Overview
 --------------------------
@@ -22,6 +23,13 @@ Later, more features were added on top for convenience but the following still a
 - if a feature needs some external library or platform specific stuff it's an optional extension
 - drawing and painting is not a main use of the library -> there are better and faster options for this
 
+Status
+-----------
+
+Imaging started almost 20 years ago and since 2009 it is more or less in maintenance mode without big new features being added.
+Anyway, it is still alive, updated to work with current compilers and platforms, and here and there a new feature gets in. Documentation can be pretty outdated though.
+
+
 Features
 --------------------------
 
@@ -30,16 +38,16 @@ Loading and saving of these image file formats:
 - PNG/APNG, MNG, JNG
 - JPEG
 - GIF
-- DDS
-- TGA, BMP
-- HDR, PCX, XPM, PNM
+- DDS, HDR
+- TGA, BMP 
+- PCX, XPM, PNM/PPM
 - TIFF, JPEG2000 (not native Pascal, depends on platform)
 - and more
 
 Supported platforms are:
 
 - Delphi: Windows, macOS
-- FPC: Windows, Linux x86/ARMv7, Android, macOS
+- FPC: Windows, Linux x86/ARM, Android, macOS
 
 Many internal image data formats and conversions:
 
@@ -66,15 +74,9 @@ and more.
 License & Credits
 ------------------
 
-Imaging comes with two open source licenses from which you can choose the one which fits your needs best:
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0.
 
-- MPL - Mozilla Public License
-- LGPL - GNU Lesser General Public License
+Developed by Marek Mauder
 
- Developed by Marek Mauder.
-
-Status
------------
-
-Imaging started almost 20 years ago and since 2009 it is more or less in maintenance mode without big new features being added.
-Anyway, it is still alive, updated to work with current compilers and platforms, and here and there a new feature gets in. Documentation can be pretty outdated though.

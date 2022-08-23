@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
   by Marek Mauder
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains image format loader/saver for Photoshop PSD image format.}
 unit ImagingPsd;
@@ -306,7 +290,7 @@ begin
     GetMem(PackedLine, MaxRLESize);
 
     try
-      // Image color chanels are stored separately in PSDs so we will load
+      // Image color channels are stored separately in PSDs so we will load
       // one by one and copy their data to appropriate addresses of dest image.
       for I := 0 to Header.Channels - 1 do
       begin
@@ -390,7 +374,7 @@ begin
       if Header.Mode = cmCMYK then
       begin
         // Convert CMYK images to RGB (alpha is ignored here). PSD stores CMYK
-        // channels in the way that first requires substraction from max channel value
+        // channels in the way that first requires subtraction from max channel value
         if ChannelPixelSize = 1 then
         begin
           PCol32 := Bits;
@@ -523,7 +507,7 @@ var
     if not SeparateChannelStorage then
     begin
       // This is for storing background merged image. There's only one
-      // compression flag and one RLE lenghts table for all channels
+      // compression flag and one RLE lengths table for all channels
       WordVal := Swap(Compression);
       GetIO.Write(Handle, @WordVal, SizeOf(WordVal));
       if Compression = CompressionRLE then
@@ -537,7 +521,7 @@ var
     begin
       if SeparateChannelStorage then
       begin
-        // Layer image data has compression flag and RLE lenghts table
+        // Layer image data has compression flag and RLE lengths table
         // independent for each channel
         WordVal := Swap(CompressionRLE);
         GetIO.Write(Handle, @WordVal, SizeOf(WordVal));
@@ -716,7 +700,7 @@ begin
         ChannelInfo.ChannelID := SwapEndianWord(I);
         if (I = Info.ChannelCount - 1) and Info.HasAlphaChannel then
           ChannelInfo.ChannelID := Swap(Word(-1));
-        ChannelInfo.Size := SwapEndianUInt32(ChannelDataSizes[I] + 2); // datasize (incl RLE table) + comp. flag
+        ChannelInfo.Size := SwapEndianUInt32(ChannelDataSizes[I] + 2); // data size (incl RLE table) + comp. flag
         Write(Handle, @ChannelInfo, SizeOf(ChannelInfo));
       end;
 

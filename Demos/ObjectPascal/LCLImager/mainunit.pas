@@ -1,7 +1,7 @@
 {
   Vampyre Imaging Library Demo
   LCL Imager (ObjectPascal, high level/component sets/canvas, Win32/Linux/macOS)
-  tested in Lazarus 1.8.4 (Windows; Linux: Gtk2, Qt; macOS: Carbon, Cocoa)
+  tested in Lazarus 2.2.0 (Windows; Linux: Gtk2, Qt; macOS: Carbon, Cocoa)
   written by Marek Mauder
 
   Simple image manipulator program which shows usage of Imaging VCL/LCL
@@ -334,7 +334,7 @@ begin
 {$ELSEIF Defined(LINUX)}
   Platform := ' - Linux';
 {$ELSEIF Defined(DARWIN)}
-  Platform := ' - OSX';
+  Platform := ' - macOS';
 {$ENDIF}
 
   Caption := Format(SWindowTitle, [Imaging.GetVersionStr]) + Platform;
@@ -630,8 +630,8 @@ begin
       ptDecContrast:    FImageCanvas.ModifyContrastBrightness(-20, 0);
       ptIncBrightness:  FImageCanvas.ModifyContrastBrightness(0, 20);
       ptDecBrightness:  FImageCanvas.ModifyContrastBrightness(0, -20);
-      ptIncGamma:       FImageCanvas.GammaCorection(1.2, 1.2, 1.2);
-      ptDecGamma:       FImageCanvas.GammaCorection(0.8, 0.8, 0.8);
+      ptIncGamma:       FImageCanvas.GammaCorrection(1.2, 1.2, 1.2);
+      ptDecGamma:       FImageCanvas.GammaCorrection(0.8, 0.8, 0.8);
       ptThreshold:      FImageCanvas.Threshold(0.5, 0.5, 0.5);
       ptLevelsLow:      FImageCanvas.AdjustColorLevels(0.0, 0.5, 1.0);
       ptLevelsHigh:     FImageCanvas.AdjustColorLevels(0.35, 1.0, 0.9);

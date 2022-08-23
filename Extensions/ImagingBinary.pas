@@ -1,32 +1,16 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { Unit with operations on binary images. Binary images in Imaging are
-  ifGray8 images where pixels with value 0 are considerend off, an pixels > 0
+  ifGray8 images where pixels with value 0 are considered off, an pixels > 0
   are on.
   Note: Native ifBinary data format was later added to Imaging. However,
   these functions still use ifGray8 for representation for less complex
@@ -80,14 +64,14 @@ procedure Morphology(var Image: TImageData; const Strel: TStructElement; Op: TMo
   work only in defined part of image (useful when the document has text only in
   smaller area of page and non-text features outside the area confuse the rotation detector).
   Various calculations stats can be retrieved by passing Stats parameter.}
-function CalcRotationAngle(MaxAngle: Integer; Treshold: Integer;
+function CalcRotationAngle(MaxAngle: Integer; Threshold: Integer;
   Width, Height: Integer; Pixels: PByteArray; DetectionArea: PRect = nil;
   Stats: PCalcSkewAngleStats = nil): Double;
 { Deskews given image. Finds rotation angle and rotates image accordingly.
   Works best on low-color document-like images (scans).
   MaxAngle is maximal (abs. value) expected skew angle in degrees (to speed things up)
   and Threshold (0..255) is used to classify pixel as black (text) or white (background).
-  If Treshold=-1 then auto threshold calculated by OtsuThresholding is used.}
+  If Threshold=-1 then auto threshold calculated by OtsuThresholding is used.}
 procedure DeskewImage(var Image: TImageData; MaxAngle: Integer = 10; Threshold: Integer = -1);
 
 implementation
@@ -240,7 +224,7 @@ begin
   Image := ImgOut;
 end;
 
-function CalcRotationAngle(MaxAngle: Integer; Treshold: Integer;
+function CalcRotationAngle(MaxAngle: Integer; Threshold: Integer;
   Width, Height: Integer; Pixels: PByteArray; DetectionArea: PRect; Stats: PCalcSkewAngleStats): Double;
 const
   // Number of "best" lines we take into account when determining
@@ -267,7 +251,7 @@ var
   // Classifies pixel at [X, Y] as black or white using threshold.
   function IsPixelBlack(X, Y: Integer): Boolean;
   begin
-    Result := Pixels[Y * Width + X] < Treshold;
+    Result := Pixels[Y * Width + X] < Threshold;
   end;
 
   // Calculates alpha parameter for given angle step.
@@ -299,7 +283,7 @@ var
   end;
 
   // Uses Hough transform to calculate all lines that intersect
-  // interesting points (those classified as beign on base line of the text).
+  // interesting points (those classified as being on base line of the text).
   procedure CalcHoughTransform;
   var
     Y, X: Integer;
@@ -348,7 +332,7 @@ var
 
     for I := 0 to Count - 1 do
     begin
-      // Caculate line angle and distance according to index in the accumulator
+      // Calculate line angle and distance according to index in the accumulator
       DIndex := Result[I].Index div AlphaSteps;
       AlphaIndex := Result[I].Index - DIndex * AlphaSteps;
       Result[I].Alpha := GetAlpha(AlphaIndex);

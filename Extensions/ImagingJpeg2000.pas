@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains image format loader/saver for Jpeg 2000 images.}
 unit ImagingJpeg2000;
@@ -32,16 +16,18 @@ unit ImagingJpeg2000;
 
 interface
 
-{$IF not (
-  (Defined(DCC) and Defined(CPUX86) and not Defined(MACOS)) or
-  (Defined(FPC) and not Defined(MSDOS) and
-    ((Defined(CPUX86) and (Defined(LINUX) or Defined(WIN32) or Defined(MACOS)) or
-     (Defined(CPUX64) and Defined(LINUX)))))
-  )}
-  // JPEG2000 only for 32bit Windows/Linux/OSX and for 64bit Unix with FPC
-implementation
-begin
-{$ELSE}
+{
+  JPEG2000 support needs precompiled C object files and only some targets are
+  available.
+
+  Delphi targets: Windows 32b
+  FPC targets: Windows 32b, Linux 32+64b, OSX 32b
+}
+
+{$IF (Defined(DCC) and Defined(MSWINDOWS) and Defined(CPUX86)) or
+     (Defined(FPC) and Defined(MSWINDOWS) and Defined(CPUX86)) or
+     (Defined(FPC) and Defined(LINUX) and (Defined(CPUX86) or Defined(CPUX64))) or
+     (Defined(FPC) and Defined(MACOS) and Defined(CPUX86))}
 uses
   SysUtils, ImagingTypes, Imaging, ImagingColors, ImagingIO, ImagingUtility,
   ImagingExtFileFormats, OpenJpeg;
@@ -57,7 +43,7 @@ type
     "signedness". Jpeg 2000 images can be lossy or lossless compressed.
 
     Imaging can load most data formats (except images
-    with componenet bitdepth > 16 => no Imaging data format equivalents).
+    with component bitdepth > 16 => no Imaging data format equivalents).
     Components with sample separation are loaded correctly, ICC profiles
     or palettes are not used, YCbCr images are translated to RGB.
 
@@ -98,7 +84,7 @@ type
     { Specifies JPEG 2000 output scaling. Since JPEG 2000 supports arbitrary Bit Depths,
       the default behaviour is to scale the images up tp the next 8^n bit depth.
       This can be disabled by setting this option to False.
-      Defaul value is True. Accessible through
+      Default value is True. Accessible through
       ImagingJpeg2000ScaleOutput option.}
     property ScaleOutput: LongBool read FScaleOutput write FScaleOutput;
   end;
@@ -343,7 +329,7 @@ begin
     if image = nil then
       Exit;
 
-    // Determine which Imaging data format to use accorsing to
+    // Determine which Imaging data format to use according to
     // decoded image components
     case image.numcomps of
       2: case image.comps[0].prec of
@@ -618,11 +604,17 @@ end;
 initialization
   RegisterImageFileFormat(TJpeg2000FileFormat);
 
+{$ELSE}
+implementation
+begin
+{$IFEND}
+
 {
   File Notes:
 
  -- TODOS ----------------------------------------------------
     - nothing now
+
   -- 0.27 Changes ---------------------------------------------
     - by Hanno Hugenberg <hanno.hugenberg@pergamonmed.com>
     - introduced the ImagingJpeg2000ScaleOutput parameter for keeping
@@ -644,9 +636,8 @@ initialization
   -- 0.21 Changes/Bug Fixes -----------------------------------
     - Removed ifGray32 from supported formats, OpenJPEG crashes when saving them.
     - Added Seek after loading to set input pos to the end of image.
-    - Saving added losy/lossless, quality option added.
+    - Saving added lossy/lossless, quality option added.
     - Initial loading-only version created.
 
 }
-{$IFEND}
 end.

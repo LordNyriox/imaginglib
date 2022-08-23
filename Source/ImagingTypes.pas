@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains basic types and constants used by Imaging library.}
 unit ImagingTypes;
@@ -36,7 +20,7 @@ const
   { Current Major version of Imaging.}
   ImagingVersionMajor = 0;
   { Current Minor version of Imaging.}
-  ImagingVersionMinor = 80;
+  ImagingVersionMinor = 82;
 
   { Imaging Option Ids whose values can be set/get by SetOption/
     GetOption functions.}
@@ -85,7 +69,7 @@ const
     Default value is 5.}
   ImagingPNGPreFilter          = 25;
   { Sets ZLib compression level used when saving PNG images.
-    Allowed values are in range 0 (no compresstion) to 9 (best compression).
+    Allowed values are in range 0 (no compression) to 9 (best compression).
     Default value is 5.}
   ImagingPNGCompressLevel      = 26;
   { Boolean option that specifies whether PNG images with more frames (APNG format)
@@ -159,22 +143,22 @@ const
     format). Mask is 'anded' (bitwise AND) with every pixel's
     channel value when creating color histogram. If $FF is used
     all 8bits of color channels are used which can result in very
-    slow proccessing of large images with many colors so you can
+    slow processing of large images with many colors so you can
     use lower masks to speed it up (FC, F8 and F0 are good
     choices). Allowed values are in range <0, $FF> and default is
     $FE.                                                          }
   ImagingColorReductionMask   = 128;
   { This option can be used to override image data format during image
     loading. If set to format different from ifUnknown all loaded images
-    are automaticaly converted to this format. Useful when you have
+    are automatically converted to this format. Useful when you have
     many files in various formats but you want them all in one format for
-    further proccessing. Allowed values are in
+    further processing. Allowed values are in
     range <Ord(Low(TImageFormat)), Ord(High(TImageFormat))> and
     default value is ifUnknown.}
   ImagingLoadOverrideFormat   = 129;
   { This option can be used to override image data format during image
     saving. If set to format different from ifUnknown all images
-    to be saved are automaticaly internaly converted to this format.
+    to be saved are automatically internally converted to this format.
     Note that image file formats support only a subset of Imaging data formats
     so final saved file may in different format than this override.
     Allowed values are in range <Ord(Low(TImageFormat)), Ord(High(TImageFormat))>
@@ -186,10 +170,10 @@ const
     <Ord(Low(ImagingFormats.TSamplingFilter)), Ord(High(ImagingFormats.TSamplingFilter))>
     and default value is 1 (linear filter).}
   ImagingMipMapFilter         = 131;
-  { Specifies treshold value used when automatically converting images to
-    ifBinary format. For adaptive tresholding see ImagingBinary.pas unit.
+  { Specifies threshold value used when automatically converting images to
+    ifBinary format. For adaptive thresholding see ImagingBinary.pas unit.
     Default value is 128 and allowed range is 0..255.}
-  ImagingBinaryTreshold       = 132;
+  ImagingBinaryThreshold       = 132;
 
   { Returned by GetOption if given Option Id is invalid.}
   InvalidOption = -$7FFFFFFF;
@@ -270,7 +254,7 @@ type
     ifATI1N          = 204,
     ifATI2N          = 205,
     ifBinary         = 206,
-    { Passtrough formats }
+    { Passthrough formats }
     {ifETC1           = 220,
     ifETC2RGB        = 221,
     ifETC2RGBA       = 222,
@@ -453,8 +437,8 @@ type
                                       // format does not exist
     IsIndexed: Boolean;               // True if image uses palette
     IsSpecial: Boolean;               // True if image is in special format
-    IsPasstrough: Boolean;            // True if image is in passtrough program (Imaging
-                                      // iself doesn't know how to decode and encode it -
+    IsPassthrough: Boolean;           // True if image is in passthrough program (Imaging
+                                      // itself doesn't know how to decode and encode it -
                                       // complex texture compressions etc.)
     PixelFormat: PPixelFormatInfo;    // Pixel format structure
     GetPixelsSize: TFormatGetPixelsSizeFunc; // Returns size in bytes of
@@ -531,7 +515,7 @@ implementation
       ifR32G32B32F, ifB32G32G32F.
 
   -- 0.26.5 Changes/Bug Fixes ---------------------------------
-    - Added ifBinary image format and ImagingBinaryTreshold option.
+    - Added ifBinary image format and ImagingBinaryThreshold option.
     - Lanczos filter added to TResizeFilter enum.
 
   -- 0.24.3 Changes/Bug Fixes ---------------------------------

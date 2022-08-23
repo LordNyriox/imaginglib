@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
   by Marek Mauder
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains image format loader/saver for DirectDraw Surface images.}
 unit ImagingDds;
@@ -37,7 +21,7 @@ uses
 
 type
   { Class for loading and saving Microsoft DirectDraw surfaces.
-    It can load/save all D3D formats which have coresponding
+    It can load/save all D3D formats which have corresponding
     TImageFormat. It supports plain textures, cube textures and
     volume textures, all of these can have mipmaps. It can also
     load some formats which have no exact TImageFormat, but can be easily
@@ -137,7 +121,7 @@ const
   D3DFMT_R16F          = 111;
   D3DFMT_A16B16G16R16F = 113;
 
-  { Constans used by TDDSurfaceDesc2.Flags.}
+  { Constants used by TDDSurfaceDesc2.Flags.}
   DDSD_CAPS            = $00000001;
   DDSD_HEIGHT          = $00000002;
   DDSD_WIDTH           = $00000004;
@@ -147,7 +131,7 @@ const
   DDSD_LINEARSIZE      = $00080000;
   DDSD_DEPTH           = $00800000;
 
-  { Constans used by TDDSPixelFormat.Flags.}
+  { Constants used by TDDSPixelFormat.Flags.}
   DDPF_ALPHAPIXELS     = $00000001;    // used by formats which contain alpha
   DDPF_FOURCC          = $00000004;    // used by DXT and large ARGB formats
   DDPF_RGB             = $00000040;    // used by RGB formats
@@ -155,12 +139,12 @@ const
   DDPF_BUMPLUMINANCE   = $00040000;    // used by mixed signed-unsigned formats
   DDPF_BUMPDUDV        = $00080000;    // used by signed formats
 
-  { Constans used by TDDSCaps.Caps1.}
+  { Constants used by TDDSCaps.Caps1.}
   DDSCAPS_COMPLEX      = $00000008;
   DDSCAPS_TEXTURE      = $00001000;
   DDSCAPS_MIPMAP       = $00400000;
 
-  { Constans used by TDDSCaps.Caps2.}
+  { Constants used by TDDSCaps.Caps2.}
   DDSCAPS2_CUBEMAP     = $00000200;
   DDSCAPS2_POSITIVEX   = $00000400;
   DDSCAPS2_NEGATIVEX   = $00000800;
@@ -217,7 +201,7 @@ type
     Desc: TDDSurfaceDesc2; // Surface description
   end;
 
-  { Resoirce types for D3D 10+ }
+  { Resource types for D3D 10+ }
   TD3D10ResourceDimension = (
     D3D10_RESOURCE_DIMENSION_UNKNOWN   = 0,
     D3D10_RESOURCE_DIMENSION_BUFFER    = 1,
@@ -409,7 +393,7 @@ begin
       if IsCubeMap then
       begin
         // Cube maps are stored like this
-        // Face 0 mimap 0
+        // Face 0 mipmap 0
         // Face 0 mipmap 1
         // ...
         // Face 1 mipmap 0

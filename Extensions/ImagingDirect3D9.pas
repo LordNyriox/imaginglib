@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+} 
 
 { This unit contains functions for loading and saving Direct3D 9 textures
   using Imaging and for converting images to textures and vice versa.}
@@ -127,7 +111,7 @@ function SaveD3DTextureToStream(const Ext: string; Stream: TStream; const Textur
   Saves all present mipmap levels.}
 function SaveD3DTextureToMemory(const Ext: string; Data: Pointer; var Size: LongInt; const Texture: IDirect3DTexture9): Boolean;
 
-{ Converts main level of the D3D texture to TImageData strucrue. OverrideFormat
+{ Converts main level of the D3D texture to TImageData structure. OverrideFormat
   can be used to convert output image to the specified format rather
   than use the format taken from D3D texture, ifUnknown means no conversion.}
 function CreateImageFromD3DTexture(const Texture: IDirect3DTexture9;
@@ -446,7 +430,7 @@ begin
     end
     else
     begin
-      // Image format coresponding to desired D3D format is either found
+      // Image format corresponding to desired D3D format is either found
       // and image is converted to it (if the image is not in this format already)
       // or it is not found (or not supported by hardware) and default format is used
       ConvTo := D3DFormatToImageFormat(Format);
@@ -649,7 +633,7 @@ begin
   begin
     // Check if desired mipmap level count is valid
     ExistingLevels := Texture.GetLevelCount;
-    if (MipLevels <= 0) or (Miplevels > ExistingLevels) then
+    if (MipLevels <= 0) or (MipLevels > ExistingLevels) then
       MipLevels := ExistingLevels;
 
     Texture.GetLevelDesc(0, Desc);
@@ -744,7 +728,7 @@ begin
 
   if Succeeded(Surface.LockRect(Rect, nil, D3DLOCK_READONLY)) then
   begin
-    // If surface was successfuly locked a new image is created
+    // If surface was successfully locked a new image is created
     // and surface's contents are copied to it
     NewImage(Desc.Width, Desc.Height, CurrentFormat, Image);
     FillImageWithLockedRect(Image, Rect);

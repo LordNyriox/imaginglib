@@ -1,29 +1,13 @@
 {
   Vampyre Imaging Library
-  by Marek Mauder 
-  http://imaginglib.sourceforge.net
-
-  The contents of this file are used with permission, subject to the Mozilla
-  Public License Version 1.1 (the "License"); you may not use this file except
-  in compliance with the License. You may obtain a copy of the License at
-  http://www.mozilla.org/MPL/MPL-1.1.html
-
-  Software distributed under the License is distributed on an "AS IS" basis,
-  WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
-  the specific language governing rights and limitations under the License.
-
-  Alternatively, the contents of this file may be used under the terms of the
-  GNU Lesser General Public License (the  "LGPL License"), in which case the
-  provisions of the LGPL License are applicable instead of those above.
-  If you wish to allow use of your version of this file only under the terms
-  of the LGPL License and not to allow others to use your version of this file
-  under the MPL, indicate your decision by deleting  the provisions above and
-  replace  them with the notice and other provisions required by the LGPL
-  License.  If you do not delete the provisions above, a recipient may use
-  your version of this file under either the MPL or the LGPL License.
-
-  For more information about the LGPL: http://www.gnu.org/copyleft/lesser.html
-}
+  by Marek Mauder
+  https://github.com/galfar/imaginglib
+  https://imaginglib.sourceforge.io
+  - - - - -
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0.
+}  
 
 { This unit is heart of Imaging library. It contains basic functions for
   manipulating image data as well as various image file format support.}
@@ -37,7 +21,7 @@ uses
   SysUtils, Classes, Types, ImagingTypes;
 
 type
-  { Default Imaging excepton class }
+  { Default Imaging exception class }
   EImagingError = class(Exception);
   { Raised when function receives bad image (not passed TestImage).}
   EImagingBadImage = class(Exception)
@@ -65,7 +49,7 @@ function NewImage(Width, Height: LongInt; Format: TImageFormat;
   var Image: TImageData): Boolean;
 { Returns True if given TImageData record is valid.}
 function TestImage(const Image: TImageData): Boolean;
-{ Frees given image data. Ater this call image is in the same state
+{ Frees given image data. After this call image is in the same state
   as after calling InitImage. If image is not valid (dost not pass TestImage
   test) it is only zeroed by calling InitImage.}
 procedure FreeImage(var Image: TImageData);
@@ -90,7 +74,7 @@ function DetermineStreamFormat(Stream: TStream): string;
   (which can be used in LoadFromStream/LoadFromMem type functions).
   If memory is not in any of the supported formats empty string is returned.}
 function DetermineMemoryFormat(Data: Pointer; Size: LongInt): string;
-{ Checks that an apropriate file format is supported purely from inspecting
+{ Checks that an appropriate file format is supported purely from inspecting
   the given file name's extension (not contents of the file itself).
   The file need not exist.}
 function IsFileFormatSupported(const FileName: string): Boolean;
@@ -157,14 +141,14 @@ function SaveMultiImageToMemory(const Ext: string; Data: Pointer;
 { Manipulation Functions }
 
 { Creates identical copy of image data. Clone should be initialized
-  by InitImage or it should be vaild image which will be freed by CloneImage.}
+  by InitImage or it should be valid image which will be freed by CloneImage.}
 function CloneImage(const Image: TImageData; var Clone: TImageData): Boolean;
 { Converts image to the given format.}
 function ConvertImage(var Image: TImageData; DestFormat: TImageFormat): Boolean;
 { Flips given image. Reverses the image along its horizontal axis - the top
   becomes the bottom and vice versa.}
 function FlipImage(var Image: TImageData): Boolean;
-{ Mirrors given image. Reverses the image along its vertical axis — the left
+{ Mirrors given image. Reverses the image along its vertical axis ï¿½ the left
   side becomes the right and vice versa.}
 function MirrorImage(var Image: TImageData): Boolean;
 { Resizes given image to new dimensions. Nearest, bilinear, or bicubic filtering
@@ -203,12 +187,14 @@ function SplitImage(var Image: TImageData; var Chunks: TDynImageDataArray;
   Use it when you want to convert several images to indexed format using
   single palette for all of them. If ConvertImages is True images in array
   are converted to indexed format using resulting palette. if it is False
-  images are left intact and only resulting palatte is returned in Pal.
+  images are left intact and only resulting palette is returned in Pal.
   Pal must be allocated to have at least MaxColors entries.}
 function MakePaletteForImages(var Images: TDynImageDataArray; Pal: PPalette32;
   MaxColors: LongInt; ConvertImages: Boolean): Boolean;
-{ Rotates image by Angle degrees counterclockwise. All angles are allowed.}
+{ Rotates image by Angle degrees counterclockwise. All angles are allowed. }
 procedure RotateImage(var Image: TImageData; Angle: Single);
+{ Rotates image by Angle that is multiple of 90 degrees counterclockwise. }
+procedure RotateImageMul90(var Image: TImageData; AngleDeg: Integer);
 
 { Drawing/Pixel functions }
 
@@ -274,7 +260,7 @@ function FindColor(Pal: PPalette32; Entries: LongInt; Color: TColor32): LongInt;
   Pal must have at least Entries color entries.}
 procedure FillGrayscalePalette(Pal: PPalette32; Entries: LongInt);
 { Creates palette with given bitcount for each channel.
-  2^(RBits + GBits + BBits) should be equl to Entries. Examples:
+  2^(RBits + GBits + BBits) should be equal to Entries. Examples:
   (3, 3, 2) will create palette with all possible colors of R3G3B2 format
   and (8, 0, 0) will create palette with 256 shades of red.
   Pal must be allocated to at least Entries * SizeOf(TColor32Rec) bytes.}
@@ -290,20 +276,20 @@ procedure SwapChannelsOfPalette(Pal: PPalette32; Entries, SrcChannel,
 { Options Functions }
 
 { Sets value of integer option specified by OptionId parameter.
-  Option Ids are constans starting ImagingXXX.}
+  Option Ids are constants starting ImagingXXX.}
 function SetOption(OptionId, Value: LongInt): Boolean;
 { Returns value of integer option specified by OptionId parameter. If OptionId is
-  invalid, InvalidOption is returned. Option Ids are constans
+  invalid, InvalidOption is returned. Option Ids are constants
   starting ImagingXXX.}
 function GetOption(OptionId: LongInt): LongInt;
 { Pushes current values of all options on the stack. Returns True
-  if successfull (max stack depth is 8 now). }
+  if successful (max stack depth is 8 now). }
 function PushOptions: Boolean;
 { Pops back values of all options from the top of the stack. Returns True
-  if successfull (max stack depth is 8 now). }
+  if successful (max stack depth is 8 now). }
 function PopOptions: Boolean;
 
-{ Image Format Functions }
+{ Image Data Format Functions }
 
 { Returns short information about given image format.}
 function GetImageFormatInfo(Format: TImageFormat; out Info: TImageFormatInfo): Boolean;
@@ -341,6 +327,7 @@ procedure WriteRawImageRect(Data: Pointer; Left, Top, Width, Height: Integer;
 
 { Convenience/helper Functions }
 
+{ Resizes image proportionally to fit the given width and height. }
 procedure ResizeImageToFit(const SrcImage: TImageData; FitWidth, FitHeight: Integer;
   Filter: TResizeFilter; var DestImage: TImageData);
 
@@ -377,7 +364,7 @@ type
   { Set of TImageFormat enum.}
   TImageFormats = set of TImageFormat;
 
-  { Record containg set of IO functions internaly used by image loaders/savers.}
+  { Record containing set of IO functions internally used by image loaders/savers.}
   TIOFunctions = record
     Open: TOpenProc;
     Close: TCloseProc;
@@ -441,13 +428,13 @@ type
     { Returns set of TImageData formats that can be saved in this file format
       without need for conversion.}
     function GetSupportedFormats: TImageFormats; virtual;
-    { Method which must be overrided in descendants if they' are be capable
+    { Method which must be overridden in descendants if they' are be capable
       of loading images. Images are already freed and length is set to zero
       whenever this method gets called. Also Handle is assured to be valid
       and contains data that passed TestFormat method's check.}
     function LoadData(Handle: TImagingHandle; var Images: TDynImageDataArray;
       OnlyFirstFrame: Boolean): Boolean; virtual;
-    { Method which must be overriden in descendants if they are be capable
+    { Method which must be overridden in descendants if they are be capable
       of saving images. Images are checked to have length >0 and
       that they contain valid images. For single-image file formats
       Index contain valid index to Images array (to image which should be saved).
@@ -455,16 +442,16 @@ type
       to get all images that are to be saved.}
     function SaveData(Handle: TImagingHandle; const Images: TDynImageDataArray;
       Index: LongInt): Boolean; virtual;
-    { This method is called internaly by MakeCompatible when input image
+    { This method is called internally by MakeCompatible when input image
       is in format not supported by this file format. Image is clone of
       MakeCompatible's input and Info is its extended format info.}
     procedure ConvertToSupported(var Image: TImageData;
       const Info: TImageFormatInfo); virtual;
     { Returns True if given image is supported for saving by this file format.
       Most file formats don't need to override this method. It checks
-      (in this base class) if Image's format is in SupportedFromats set.
+      (in this base class) if Image's format is in SupportedFormats set.
       But you may override it if you want further checks
-      (proper widht and height for example).}
+      (proper width and height for example).}
     function IsSupported(const Image: TImageData): Boolean; virtual;
   public
     constructor Create(AMetadata: TMetadata = nil); virtual;
@@ -505,7 +492,7 @@ type
       (Compatible := Image) so must not free it after you are done with it
       (image bits pointer points to input image's bits).
       If input is not in supported format then it is cloned to Compatible
-      and concerted to one of supported formats (which one dependeds on
+      and converted to one of supported formats (what exact format depends on
       this file format). If image is cloned MustBeFreed is set to True
       to indicated that you must free Compatible after you are done with it.}
     function MakeCompatible(const Image: TImageData; var Compatible: TImageData;
@@ -513,10 +500,10 @@ type
     { Returns True if data located in source identified by Handle
       represent valid image in current format.}
     function TestFormat(Handle: TImagingHandle): Boolean; virtual;
-    { Resturns True if the given FileName matches filter for this file format.
+    { Returns True if the given FileName matches filter for this file format.
       For most formats it just checks filename extensions.
       It uses filename masks in from Masks property so it can recognize
-      filenames like this 'umajoXXXumajo.j0j' if one of themasks is
+      filenames like this 'umajoXXXumajo.j0j' if one of the masks is
       'umajo*umajo.j?j'.}
     function TestFileName(const FileName: string): Boolean;
     { Descendants use this method to check if their options (registered with
@@ -577,7 +564,7 @@ type
     function GetMetaByIdx(Index: Integer): TMetadataItem;
     function GetSaveMetaById(const Id: string): Variant;
     function GetSaveMetaByIdMulti(const Id: string; ImageIndex: Integer): Variant;
-    procedure TranslateUnits(ResolutionUnit: TResolutionUnit; var XRes, YRes: Single);
+    procedure TranslateUnits(ResolutionUnit: TResolutionUnit; var XRes, YRes: Double);
   public
     constructor Create;
     destructor Destroy; override;
@@ -596,8 +583,8 @@ type
     procedure CopyLoadedMetaItemsForSaving;
 
     function GetPhysicalPixelSize(ResUnit: TResolutionUnit; out XSize,
-      YSize: Single; MetaForSave: Boolean = False; ImageIndex: Integer = 0): Boolean;
-    procedure SetPhysicalPixelSize(ResUnit: TResolutionUnit; XSize, YSize: Single;
+      YSize: Double; MetaForSave: Boolean = False; ImageIndex: Integer = 0): Boolean;
+    procedure SetPhysicalPixelSize(ResUnit: TResolutionUnit; XSize, YSize: Double;
       MetaForSave: Boolean = False; ImageIndex: Integer = 0);
 
     property MetaItems[const Id: string]: Variant read GetMetaById;
@@ -612,7 +599,7 @@ type
 const
   { Metadata item id constants }
 
-  { Physical size of one pixel in micrometers. Type of value is Float.}
+  { Physical size of one pixel in micrometers. Type of value is Double.}
   SMetaPhysicalPixelSizeX = 'PhysicalPixelSizeX';
   SMetaPhysicalPixelSizeY = 'PhysicalPixelSizeY';
   { Delay for frame of animation (how long it should stay visible) in milliseconds.
@@ -640,22 +627,23 @@ function GetFormatName(Format: TImageFormat): string;
 function ImageToStr(const Image: TImageData): string;
 { Returns Imaging version string in format 'Major.Minor'.}
 function GetVersionStr: string;
-{ If Condition is True then TruePart is retured, otherwise FalsePart is returned.}
+{ If Condition is True then TruePart is returned, otherwise FalsePart is returned.}
 function IffFormat(Condition: Boolean; const TruePart, FalsePart: TImageFormat): TImageFormat;
 
 { Registers new option so it can be used by SetOption and GetOption functions.
-  Returns True if registration was succesful - that is Id is valid and is
+  Returns True if registration was successful - that is Id is valid and is
   not already taken by another option.}
 function RegisterOption(OptionId: LongInt; Variable: PLongInt): Boolean;
 
 { Registers new image loader/saver so it can be used by LoadFrom/SaveTo
   functions.}
 procedure RegisterImageFileFormat(AClass: TImageFileFormatClass);
-{ Returns image format loader/saver according to given extension
-  or nil if not found.}
+{ Returns image format loader/saver according to a given extension
+  (case insensitive) or nil if not found. Extension may or may not
+  contain the initial dot.}
 function FindImageFileFormatByExt(const Ext: string): TImageFileFormat;
-{ Returns image format loader/saver according to given filename
-  or nil if not found.}
+{ Returns image format loader/saver according to a given filename
+  (case insensitive) or nil if not found. }
 function FindImageFileFormatByName(const FileName: string): TImageFileFormat;
 { Returns image format loader/saver based on its class
   or nil if not found or not registered.}
@@ -789,7 +777,7 @@ const
   OptionStackDepth = 8;
   // Do not change the default format now, its too late
   DefaultImageFormat: TImageFormat = ifA8R8G8B8;
-  // Format used to create metadata IDs for frames loaded form multiimages.
+  // Format used to create metadata IDs for frames loaded from multi-images.
   SMetaIdForSubImage = '%s/%d';
 
 type
@@ -812,11 +800,11 @@ var
   IO: TIOFunctions;
   // List with all registered TImageFileFormat classes
   ImageFileFormats: TList = nil;
-  // Aarray with registered options (pointers to their values)
+  // Array with registered options (pointers to their values)
   Options: TOptionArray = nil;
-  // Array containing addional infomation about every image format
+  // Array containing additional information about every image format
   ImageFormatInfos: TImageFormatInfoArray;
-  // Stack used by PushOptions/PopOtions functions
+  // Stack used by PushOptions/PopOptions functions
   OptionStack: TOptionStack = nil;
 var
   // Variable for ImagingColorReduction option
@@ -827,8 +815,8 @@ var
   SaveOverrideFormat: TImageFormat = ifUnknown;
   // Variable for ImagingSaveOverrideFormat option
   MipMapFilter: TSamplingFilter = sfLinear;
-  // Variable for ImagingBinaryTreshold option
-  BinaryTreshold: Integer = 128;
+  // Variable for ImagingBinaryThreshold option
+  BinaryThreshold: Integer = 128;
 
 { Exceptions }
 
@@ -850,7 +838,7 @@ procedure SetStreamIO; forward;
 procedure SetMemoryIO; forward;
 { Inits image format infos array.}
 procedure InitImageFormats; forward;
-{ Freew image format infos array.}
+{ Free image format infos array.}
 procedure FreeImageFileFormats; forward;
 { Creates options array and stack.}
 procedure InitOptions; forward;
@@ -1373,7 +1361,7 @@ begin
     DstInfo := ImageFormatInfos[DestFormat];
     if SrcInfo = DstInfo then
     begin
-      // There is nothing to convert - src is alredy in dest format
+      // There is nothing to convert - src is already in dest format
       Result := True;
       Exit;
     end;
@@ -1884,7 +1872,7 @@ begin
 
     // For every chunk we create new image and copy a portion of
     // the source image to it. If chunk is on the edge of the source image
-    // we fill enpty space with Fill pixel data if PreserveSize is set or
+    // we fill empty space with Fill pixel data if PreserveSize is set or
     // make the chunk smaller if it is not set
     for Y := 0 to YChunks - 1 do
       for X := 0 to XChunks - 1 do
@@ -2250,9 +2238,87 @@ begin
 
     if OldFmt <> Image.Format then
       ConvertImage(Image, OldFmt);
-
   except
     raise UpdateExceptMessage(GetExceptObject, SErrorRotateImage, [ImageToStr(Image), Angle]);
+  end;
+end;
+
+procedure RotateImageMul90(var Image: TImageData; AngleDeg: Integer);
+var
+  RotImage: TImageData;
+  X, Y, BytesPerPixel: Integer;
+  RotPix, Pix: PByte;
+begin
+  if TestImage(Image) then
+  try
+    InitImage(RotImage);
+
+    while AngleDeg >= 360 do
+      AngleDeg := AngleDeg - 360;
+    while AngleDeg < 0 do
+      AngleDeg := AngleDeg + 360;
+
+    if (AngleDeg = 0) or (Abs(AngleDeg) = 360) then
+      Exit;
+
+    if not ((AngleDeg mod 90) = 0) then
+      raise EImagingError.CreateFmt('Angle must be multiple of 90 but was: %d', [AngleDeg]);
+
+    if ((AngleDeg = 90) or (AngleDeg = 270)) and (Image.Width <> Image.Height) then
+      NewImage(Image.Height, Image.Width, Image.Format, RotImage)
+    else
+      NewImage(Image.Width, Image.Height, Image.Format, RotImage);
+
+    BytesPerPixel := ImageFormatInfos[Image.Format].BytesPerPixel;
+
+    RotPix := RotImage.Bits;
+    case AngleDeg of
+      90:
+        begin
+          for Y := 0 to RotImage.Height - 1 do
+          begin
+            Pix := @PByteArray(Image.Bits)[(Image.Width - Y - 1) * BytesPerPixel];
+            for X := 0 to RotImage.Width - 1 do
+            begin
+              CopyPixel(Pix, RotPix, BytesPerPixel);
+              Inc(RotPix, BytesPerPixel);
+              Inc(Pix, Image.Width * BytesPerPixel);
+            end;
+          end;
+        end;
+      180:
+        begin
+          Pix := @PByteArray(Image.Bits)[((Image.Height - 1) * Image.Width +
+            (Image.Width - 1)) * BytesPerPixel];
+          for Y := 0 to RotImage.Height - 1 do
+            for X := 0 to RotImage.Width - 1 do
+            begin
+              CopyPixel(Pix, RotPix, BytesPerPixel);
+              Inc(RotPix, BytesPerPixel);
+              Dec(Pix, BytesPerPixel);
+            end;
+        end;
+      270:
+        begin
+          for Y := 0 to RotImage.Height - 1 do
+          begin
+            Pix := @PByteArray(Image.Bits)[((Image.Height - 1) * Image.Width + Y) * BytesPerPixel];
+            for X := 0 to RotImage.Width - 1 do
+            begin
+              CopyPixel(Pix, RotPix, BytesPerPixel);
+              Inc(RotPix, BytesPerPixel);
+              Dec(Pix, Image.Width * BytesPerPixel);
+            end;
+          end;
+        end;
+    end;
+
+    FreeMemNil(Image.Bits);
+    RotImage.Palette := Image.Palette;
+    Image := RotImage;
+  except
+    raise UpdateExceptMessage(GetExceptObject, 'Error while rotating image %s by %d degrees',
+      [ImageToStr(Image), AngleDeg]);
   end;
 end;
 
@@ -3159,10 +3225,13 @@ end;
 function FindImageFileFormatByExt(const Ext: string): TImageFileFormat;
 var
   I: LongInt;
+  SearchedExt: string;
 begin
   Result := nil;
+  SearchedExt := TrimLeftSet(Ext, ['.']);
+
   for I := ImageFileFormats.Count - 1 downto 0 do
-    if TImageFileFormat(ImageFileFormats[I]).Extensions.IndexOf(Ext) >= 0 then
+    if TImageFileFormat(ImageFileFormats[I]).Extensions.IndexOf(SearchedExt) >= 0 then
     begin
       Result := TImageFileFormat(ImageFileFormats[I]);
       Exit;
@@ -3451,7 +3520,7 @@ begin
 
     if Result then
     begin
-      // Convert to overriden format if it is set
+      // Convert to overridden format if it is set
       if LoadOverrideFormat <> ifUnknown then
         for I := Low(Images) to High(Images) do
           ConvertImage(Images[I], LoadOverrideFormat);
@@ -3578,7 +3647,7 @@ begin
       if TestFormat(Handle) then
       begin
         Result := PrepareLoad(Handle, Images, OnlyFirstLevel) and
-          LoadData(Handle, Images, OnlyFirstlevel);
+          LoadData(Handle, Images, OnlyFirstLevel);
         Result := PostLoadCheck(Images, Result);
       end
       else
@@ -3609,7 +3678,7 @@ begin
       if TestFormat(Handle) then
       begin
         Result := PrepareLoad(Handle, Images, OnlyFirstLevel) and
-          LoadData(Handle, Images, OnlyFirstlevel);
+          LoadData(Handle, Images, OnlyFirstLevel);
         Result := PostLoadCheck(Images, Result);
       end
       else
@@ -3642,7 +3711,7 @@ begin
       if TestFormat(Handle) then
       begin
         Result := PrepareLoad(Handle, Images, OnlyFirstLevel) and
-          LoadData(Handle, Images, OnlyFirstlevel);
+          LoadData(Handle, Images, OnlyFirstLevel);
         Result := PostLoadCheck(Images, Result);
       end
       else
@@ -4072,7 +4141,7 @@ begin
 end;
 
 function TMetadata.GetPhysicalPixelSize(ResUnit: TResolutionUnit; out XSize,
-  YSize: Single; MetaForSave: Boolean; ImageIndex: Integer): Boolean;
+  YSize: Double; MetaForSave: Boolean; ImageIndex: Integer): Boolean;
 type
   TGetter = function(const Id: string; ImageIndex: Integer): Variant of object;
 var
@@ -4108,7 +4177,7 @@ begin
 end;
 
 procedure TMetadata.SetPhysicalPixelSize(ResUnit: TResolutionUnit; XSize,
-  YSize: Single; MetaForSave: Boolean; ImageIndex: Integer);
+  YSize: Double; MetaForSave: Boolean; ImageIndex: Integer);
 type
   TAdder = procedure(const Id: string; const Value: Variant; ImageIndex: Integer) of object;
 var
@@ -4126,9 +4195,9 @@ begin
 end;
 
 procedure TMetadata.TranslateUnits(ResolutionUnit: TResolutionUnit; var XRes,
-  YRes: Single);
+  YRes: Double);
 var
-  UnitSize: Single;
+  UnitSize: Double;
 begin
   case ResolutionUnit of
     ruDpi: UnitSize := 25400;
@@ -4169,7 +4238,7 @@ initialization
   RegisterOption(ImagingLoadOverrideFormat, @LoadOverrideFormat);
   RegisterOption(ImagingSaveOverrideFormat, @SaveOverrideFormat);
   RegisterOption(ImagingMipMapFilter, @MipMapFilter);
-  RegisterOption(ImagingBinaryTreshold, @BinaryTreshold);
+  RegisterOption(ImagingBinaryThreshold, @BinaryThreshold);
 finalization
   FreeOptions;
   FreeImageFileFormats;
@@ -4193,7 +4262,7 @@ finalization
       by EImagingError raised afterwards in NewImage try/except).
     - Fixed possible AV in Rotate45 subproc of RotateImage.
     - Added ReadRawXXX and WriteRawXXX functions for raw image bits IO.
-    - Implemented ImagingBinaryTreshold option.
+    - Implemented ImagingBinaryThreshold option.
     - Added support for simple image metadata loading/saving.
     - Moved file format definition (name, exts, caps, ...) from
       constructor to new Define method.
@@ -4204,7 +4273,7 @@ finalization
     - Reversed the order file formats list is searched so
       if you register a new one it will be found sooner than
       built in formats.
-    - Fixed memory leak in ResizeImage ocurring when resizing
+    - Fixed memory leak in ResizeImage occurring when resizing
       indexed images.
 
   -- 0.26.1 Changes/Bug Fixes ---------------------------------
@@ -4234,7 +4303,7 @@ finalization
   -- 0.21 Changes/Bug Fixes -----------------------------------
     - GenerateMipMaps threw failed assertion when input was indexed or special,
       fixed.
-    - Added CheckOptionsValidity to TImageFileFormat and its decendants.
+    - Added CheckOptionsValidity to TImageFileFormat and its descendants.
     - Unit ImagingExtras which registers file formats in Extras package
       is now automatically added to uses clause if LINK_EXTRAS symbol is
       defined in ImagingOptions.inc file.
@@ -4249,8 +4318,8 @@ finalization
       swapped correctly but new data format (swapped one) was not set.
     - Made TImageFileFormat.MakeCompatible public non-virtual method
       (and modified its function). Created new virtual
-      ConvertToSupported which should be overriden by descendants.
-      Main reason for doint this is to avoid duplicate code that was in all
+      ConvertToSupported which should be overridden by descendants.
+      Main reason for doing this is to avoid duplicate code that was in all
       TImageFileFormat's descendants.
     - Changed TImageFileFormat.GetFormatInfo's result type to TImageFormatInfo.
     - Split overloaded FindImageFileFormat functions to
@@ -4266,15 +4335,15 @@ finalization
       OpenDialog and SaveDialog type filters
     - Added Masks property and AddMasks method to TImageFileFormat.
       AddMasks replaces AddExtensions, it uses filename masks instead
-      of sime filename extensions to identify supported files.
+      of some filename extensions to identify supported files.
     - Changed TImageFileFormat.LoadData procedure to function and
-      moved varios duplicate code from its descandats (check index,...)
+      moved various duplicate code from its descendants (check index,...)
       here to TImageFileFormat helper methods.
     - Changed TImageFileFormat.SaveData procedure to function and
-      moved varios duplicate code from its descandats (check index,...)
+      moved various duplicate code from its descendants (check index,...)
       here to TImageFileFormat helper methods.
-    - Removed RAISE_EXCEPTIONS define, exceptions are now raised everytime
-    - Added MustBeFreed parameter to TImageFileFormat.MakeComptible method
+    - Removed RAISE_EXCEPTIONS define, exceptions are now raised every time
+    - Added MustBeFreed parameter to TImageFileFormat.MakeCompatible method
       that indicates that compatible image returned by this method must be
       freed after its usage.
 
@@ -4288,7 +4357,7 @@ finalization
       when choosing proper loader, this eliminated need for Ext parameter
       in stream and memory loading functions
     - added GetVersionStr function
-    - fixed bug in ResizeImage which caued indexed images to lose their
+    - fixed bug in ResizeImage which caused indexed images to lose their
       palette during process resulting in whole black image
     - Clipping in ...Rect functions now uses clipping procs from ImagingUtility,
       it also works better
@@ -4343,7 +4412,7 @@ finalization
     - added GenerateMipMaps function to low level interface
     - stream position in load/save from/to stream is now set to position before
       function was called if error occurs
-    - when error occured during load/save from/to file file handle
+    - when error occurred during load/save from/to file file handle
       was not released
     - CloneImage returned always False
 

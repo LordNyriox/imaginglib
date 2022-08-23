@@ -20,7 +20,7 @@
 
 
 (* File format support linking options.
-  Define formats which you don't want to be registred automatically (by adding
+  Define formats which you don't want to be registered automatically (by adding
   Imaging.pas unit to your uses clause).
   Default: most formats are registered = no symbols defined.
   Example: If you want to disable JPEG support just uncomment //{$DEFINE DONT_LINK_JPEG} line
@@ -128,7 +128,7 @@
   {$DEFINE MACOSX}
 {$IFEND}
 
-{$IF Defined(DCC) and (CompilerVersion < 23)}
+{$IF Defined(DCC) and (CompilerVersion < 23)}   // < XE2
   {$DEFINE CPUX86} // Compatibility with older Delphi
 {$IFEND}
 
@@ -209,7 +209,7 @@
 
 {$IFDEF FPC}               // Free Pascal options - some options set above (like min enum size)
                            // are reset to defaults by setting {$MODE} so they are
-                           // redeclared here 
+                           // redeclared here
   {$MODE DELPHI}           // compatible with delphi
   {$GOTO ON}               // alow goto
   {$PACKRECORDS 8}         // same as ALING 8 for Delphi
@@ -219,7 +219,7 @@
   {$ENDIF}
 {$ENDIF}
 
-{$IFDEF HAS_INLINE}        
+{$IFDEF HAS_INLINE}
   {$INLINE ON}             // turns inlining on for compilers that support it
 {$ENDIF}
 
